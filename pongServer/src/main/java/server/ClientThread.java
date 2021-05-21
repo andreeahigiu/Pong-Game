@@ -15,6 +15,7 @@ public class ClientThread extends Thread{
 
     private final Socket socket;
     private final ServerSocket serverSocket;
+    public static int turn;
 
     public ClientThread (Socket socket, ServerSocket serverSocket) {
         this.socket = socket ;

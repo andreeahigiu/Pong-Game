@@ -8,9 +8,12 @@ import java.net.Socket;
 
 public class Player {
 
+    public static int turn;
+
     public static void main (String[] args) throws IOException {
         String serverAddress = "127.0.0.1"; // The server's IP address
         int PORT = 8100; // The server's port
+
         try (
                 Socket socket = new Socket(serverAddress, PORT);
                 PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
