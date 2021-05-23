@@ -20,6 +20,7 @@ public class WelcomeBoard extends Application {
 
  private static Stage window;
  Scene initialOptions, board;
+ public static boolean registering;
 //
 //    public static Stage getStage() {
 //        return window;
@@ -50,12 +51,32 @@ public class WelcomeBoard extends Application {
      Button login = new Button("Login", imageView);
      login.setMaxSize(100, 150);
      login.setOnAction( e -> {
+      registering = false;
       try {
        RegisterBoard.displayRegister();
       } catch (FileNotFoundException fileNotFoundException) {
        fileNotFoundException.printStackTrace();
       }
      });
+
+
+  //register button
+  FileInputStream inputRegister = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/edit.png");
+  Image image1 = new Image(inputRegister);
+  ImageView imageView1 = new ImageView(image1);
+  imageView1.setFitHeight(30);
+  imageView1.setFitWidth(29);
+  Button register = new Button("Register", imageView1);
+  register.setMaxSize(100, 150);
+  register.setOnAction( e -> {
+   registering=true;
+   try {
+    RegisterBoard.displayRegister();
+   } catch (FileNotFoundException fileNotFoundException) {
+    fileNotFoundException.printStackTrace();
+   }
+  });
+
 
      //play button
      FileInputStream inputPlay = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/play.png");
@@ -98,7 +119,7 @@ public class WelcomeBoard extends Application {
 
      //Layout1
      VBox menuLayout = new VBox(20);
-     menuLayout.getChildren().addAll(greeting, login, play, gameSettings, ranking);
+     menuLayout.getChildren().addAll(greeting, login, register, play, gameSettings, ranking);
      initialOptions = new Scene(menuLayout, 800, 600);
      menuLayout.setAlignment(Pos.CENTER);
 

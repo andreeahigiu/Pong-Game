@@ -17,6 +17,7 @@ public class Users {
 
     private String username;
     private String password;
+    private int score;
 
     public Users(){
 
@@ -25,6 +26,14 @@ public class Users {
     public Users(String username, String password){
         this.username = username;
         this.password = password;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public Integer getId() {

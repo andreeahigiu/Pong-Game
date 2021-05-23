@@ -1,5 +1,8 @@
 package game;
 
+import dataBase.entityClasses.Users;
+import dataBase.entityManager.EntityManagement;
+import dataBase.repository.UsersRepository;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +19,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -25,6 +30,8 @@ public class RegisterBoard {
     private static Scene registerScene;
     private static String username;
     private static String password;
+    private static boolean loggedIn = false;
+    private static boolean userExists;
 
     public static void displayRegister() throws FileNotFoundException {
         window = new Stage();
@@ -52,6 +59,7 @@ public class RegisterBoard {
         grid.setVgap(12);
 
         Label confirmation = new Label("");
+        confirmation.setWrapText(true);
 
         Label usernameLabel = new Label("Username:");
         TextField userInput = new TextField();
@@ -62,25 +70,107 @@ public class RegisterBoard {
         submitBtn.setOnAction(e -> {
             username = userInput.getText();
             password = passInput.getText();
+            boolean ok = isAllowed(username, password);
+
             System.out.println("username: " + username + " pass: " + password);
-            confirmation.setText("User created!");
+            //registering
+            if(WelcomeBoard.registering) {
+                if (ok) {
+                    if (!checkExistance(username)) {
+                        createUser(username, password);
+                        confirmation.setText("User created!");
+                    } else {
+                        confirmation.setText("User already exists!");
+                    }
+                } else {
+                    confirmation.setText("Password must contain at least 8 characters and the username 2");
+                }
+            }else{
+                //login
+                if(checkExistance(username))
+                    loginUser(username, password);
+                System.out.println("loggedIn: "+ loggedIn);
+                if(loggedIn)
+                    confirmation.setText("Welcome, " + username);
+                else
+                    confirmation.setText("User does not exist!");
+
+            }
+
+
+//            createUser(username, password);
+//            if(userExists == false)
+//                confirmation.setText("user doesnt exist");
+
         });
 
         ColumnConstraints column1 = new ColumnConstraints();column1.setPercentWidth(35);
         grid.getColumnConstraints().addAll(column1);
 
         grid.add(exit, 0, 0);
-        grid.add(confirmation, 7, 0);
+        grid.add(confirmation, 7, 0, 3, 1);
         grid.add(usernameLabel, 7, 7);
         grid.add(userInput, 8, 7);
         grid.add(passwordLabel, 7, 8);
         grid.add(passInput, 8, 8);
-        grid.add(submitBtn, 7, 9, 9, 8);
-
-
+        grid.add(submitBtn, 7, 9, 1, 1);
 
         registerScene = new Scene( grid,800, 600);
         window.setScene(registerScene);
         window.show();
+    }
+
+    private static boolean isAllowed(String username, String password){
+
+        if(username.length() >= 2 && password.length() >= 8)
+            return true;
+        else
+            return false;
+    }
+
+    private static boolean checkExistance(String username){
+        try{
+            UsersRepository.findUserByName(username);
+        }catch(NoResultException e){
+            return false;
+        }
+        return true;
+    }
+
+    private static void createUser(String username, String password){
+
+        EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
+        Users newUser = new Users(username, password);
+        newUser.setScore(0);
+        UsersRepository.create(newUser);
+    }
+
+    private static void addUser(String username, String password){
+//        EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
+//        Users newUser = new Users(username, password);
+//        newUser.setScore(0);
+//        UsersRepository.create(newUser);
+        try{
+            UsersRepository.findUserByName(username);
+        }catch(NoResultException e){
+            userExists=false;
+        }
+//        if(UsersRepository.findUserByName(username) != null && UsersRepository.findUserByName(username).getPassword() == password){
+//                System.out.println("e deja");
+//            }
+//            else{
+//                System.out.println("nu e");
+//            }
+        }
+
+
+    private static void loginUser(String username, String password){
+        Users user = UsersRepository.findUserByName(username);
+        System.out.println("check pass" + user.getPassword());
+        if(user.getPassword().equals(password)){
+            loggedIn = true;
+        }else{
+            loggedIn = false;
+        }
     }
 }
