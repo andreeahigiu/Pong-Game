@@ -1,2 +1,4 @@
+game\Game.class
+game\WelcomeBoard.class
 game\InitialOptions.class
 game\GameBoard.class

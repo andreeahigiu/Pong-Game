@@ -1,72 +1,79 @@
 package game;
 
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
-public class GameBoard extends Application {
- Stage window;
- Scene initialOptions, board;
+public class GameBoard {
 
- public static void main (String[] args){
-     launch(args);
- }
+        public static Button button;
+        private static Stage window;
+        private static Scene exportScene;
 
- @Override
-    public void start(Stage mainStage){
-     window = mainStage;
+    public static Scene getExportScene() {
+        return exportScene;
+    }
 
-     //Options menu
-     Label greeting = new Label("Welcome to PONG Game!");
-     Label options = new Label("Options:");
-     Button login = new Button("Login");
-     Button play = new Button("Play");
-     play.setOnAction(e -> window.setScene(board));
-    // login.setTextFill (Color.RED);
+    public static void setExportScene(Scene exportScene) {
+        GameBoard.exportScene = exportScene;
+    }
 
-     Button gameSettings = new Button("Settings");
-     Button ranking = new Button ("Ranking");
+//    public static void main(String[] args) {
+//            launch(args);
+//        }
 
-      Font font = Font.font ("Courier New", FontWeight.BOLD, 25);
-       greeting.setFont(font);
+    public static Stage getWindow() {
+        return window;
+    }
 
-     //Layout1
-     VBox menuLayout = new VBox(20);
-     menuLayout.getChildren().addAll(greeting, options, login, play, gameSettings, ranking);
-     initialOptions = new Scene(menuLayout, 400, 400);
-  initialOptions.setFill(Color.RED);
+    public static void setWindow(Stage window) {
+        GameBoard.window = window;
+    }
 
-     menuLayout.setAlignment(Pos.BASELINE_CENTER);
+        public static void display() throws FileNotFoundException {
+            window = new Stage();
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle("It works");
 
-     //Game Board
-     Button back = new Button("back");
-     back.setOnAction(e -> window.setScene(initialOptions));
+            //exit button
+            FileInputStream inputBack = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/arrow.png");
+            Image image = new Image(inputBack);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(20);
+            imageView.setFitWidth(20);
+            Button ranking = new Button ("Ranking", imageView);
+            ranking.setMaxSize(100, 150);
 
-     Button ball = new Button("ball");
+            Button exit = new Button(null, imageView);
+            exit.setOnAction(e -> {
+                window.close();
+            });
 
-     //Layout2
+            StackPane layout = new StackPane();
+            layout.getChildren().add(exit);
+            layout.setAlignment (Pos.TOP_LEFT);
 
-     VBox layout2 = new VBox();
-     layout2.getChildren().addAll(back);
-     board = new Scene(layout2, 400, 400);
-     board.setFill(Color.RED);
+            //PONG Game
 
-     layout2.setAlignment(Pos.TOP_LEFT);
 
-     //First display the options
-     window.setScene(initialOptions);
-     window.setTitle("PONG");
-     window.show();
- }
 
-}
+            Scene scene = new Scene(layout, 700, 600);
+            exportScene = scene;
+            scene.setFill(Color.RED);
+            window.setScene(scene);
+            window.showAndWait();
+        }
+
+    }
+
