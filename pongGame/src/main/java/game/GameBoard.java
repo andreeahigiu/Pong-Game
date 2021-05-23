@@ -98,8 +98,6 @@ public class GameBoard {
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(20);
             imageView.setFitWidth(20);
-            Button ranking = new Button ("Ranking", imageView);
-            ranking.setMaxSize(100, 150);
 
             Button exit = new Button(null, imageView);
             exit.setOnAction(e -> {
@@ -112,12 +110,7 @@ public class GameBoard {
 
 
 
-            //Scene scene = new Scene(layout, 700, 600);
-//            exportScene = scene;
-//            scene.setFill(Color.RED);
-//            window.setScene(scene);
-
-            window.setScene(new Scene(new StackPane(canvas, layout)));
+            window.setScene(new Scene(new StackPane(canvas)));
             window.show();
             timeline.play();
         }
@@ -126,7 +119,7 @@ public class GameBoard {
 
         //setting the background
         gc.setFill(Color.BLACK);
-        gc.fillRect(0, 28, width, height-20);
+        gc.fillRect(0, 0, width, height);
 
         //setting the text color
         gc.setFill(Color.WHITE);
@@ -176,7 +169,7 @@ public class GameBoard {
 
         //bounding the ball with the canvas
         if(ballPosY > height || ballPosY < 0)
-            ballPosY = ballPosY * -1;
+            ballSpeedY = ballSpeedY * -1;
 
         //point calculator
         if(ballPosX < posXPlayer1 - palletWidth) {
@@ -184,10 +177,26 @@ public class GameBoard {
             gameStarted = false;
         }
 
-        if(ballPosX > posXPlayer2 - palletWidth) {
+        if(ballPosX > posXPlayer2 + palletWidth) {
             scorePlayer1++;
             gameStarted = false;
         }
+
+        //increasing the speed of the ball
+        if( ((ballPosX + ballR > posXPlayer2) && ballPosY >= posYPlayer2 && ballPosY <= posYPlayer2 + palletHeight) ||
+                ((ballPosX < posXPlayer1 + palletWidth) && ballPosY >= posYPlayer1 && ballPosY <= posYPlayer1 + palletHeight)) {
+            ballSpeedY += 1 * Math.signum(ballSpeedY);
+            ballSpeedX += 1 * Math.signum(ballSpeedX);
+            ballSpeedX *= -1;
+            ballSpeedY *= -1;
+        }
+
+        //drawing the score
+        gc.fillText(scorePlayer1 + "\t\t\t\t\t\t\t\t" + scorePlayer2, width / 2, 100);
+
+        //drawing the pallets of the players
+        gc.fillRect(posXPlayer2, posYPlayer2, palletWidth, palletHeight);
+        gc.fillRect(posXPlayer1, posYPlayer1, palletWidth, palletHeight);
 
 
     }

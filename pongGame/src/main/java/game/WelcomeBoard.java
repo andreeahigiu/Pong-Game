@@ -49,6 +49,13 @@ public class WelcomeBoard extends Application {
      imageView.setFitWidth(25);
      Button login = new Button("Login", imageView);
      login.setMaxSize(100, 150);
+     login.setOnAction( e -> {
+      try {
+       RegisterBoard.displayRegister();
+      } catch (FileNotFoundException fileNotFoundException) {
+       fileNotFoundException.printStackTrace();
+      }
+     });
 
      //play button
      FileInputStream inputPlay = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/play.png");
