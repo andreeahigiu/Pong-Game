@@ -1,18 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
-             version="3.0">
-  <persistence-unit name="default">
+    <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd%22%3E">
+
+  <persistence-unit name="Pong" transaction-type="RESOURCE_LOCAL">
 
       <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+      <class>dataBase.entityClasses.Users</class>
 
       <properties>
-        <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
-        <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
-        <property name="javax.persistence.jdbc.user" value="Student"/>
-        <property name="javax.persistence.jdbc.password" value="STUDENT"/>
+<!--        <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>-->
+<!--        <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>-->
+<!--        <property name="javax.persistence.jdbc.user" value="PLAYERS"/>-->
+<!--        <property name="javax.persistence.jdbc.password" value="PLAYERS"/>-->
+
+          <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
+          <property name="hibernate.connection.url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+          <property name="hibernate.connection.autocommit" value="false"/>
+          <property name="hibernate.connection.username" value="PLAYERS"/>
+          <property name="hibernate.connection.password" value="PLAYERS"/>
+          <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+          <property name="hibernate.connection.CharSet" value="utf8"/>
+          <property name="hibernate.connection.characterEncoding" value="utf8"/>
+          <property name="hibernate.connection.useUnicode" value="true"/>
+          <property name="hibernate.show_sql" value="true"/>
+          <property name="hibernate.hbm2ddl.auto" value="update"/>
       </properties>
 
   </persistence-unit>
