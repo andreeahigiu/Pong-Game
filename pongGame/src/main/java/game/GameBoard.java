@@ -1,7 +1,10 @@
 package game;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -9,17 +12,46 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.canvas.Canvas;
+import javafx.util.Duration;
+import javafx.scene.text.Font;
 
+import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 
 public class GameBoard {
 
-        public static Button button;
-        private static Stage window;
-        private static Scene exportScene;
+    //variables
+    public static Button button;
+    private static Stage window;
+    private static Scene exportScene;
+
+    private static final int width = 800;
+    private static final  int height = 600;
+    private static final int palletHeight = 100;
+    private static final int palletWidth = 15;
+    private static final double ballR = 15;
+    private static int ballSpeedY = 1;
+    private static int ballSpeedX = 1;
+
+    private static double posYPlayer1 = height/2;
+    private static double posYPlayer2 = height/2;
+    private static int posXPlayer1 = 0;
+    private static double posXPlayer2 = width - palletWidth;
+
+
+    private static double ballPosX = width/2;
+    private static double ballPosY = width/2;
+    private static int scorePlayer1 = 0;
+    private static int scorePlayer2 = 0;
+    private static boolean gameStarted;
+
+
 
     public static Scene getExportScene() {
         return exportScene;
@@ -41,10 +73,24 @@ public class GameBoard {
         GameBoard.window = window;
     }
 
+//    public static void playGame() throws FileNotFoundException {
+//        display();
+//    }
         public static void display() throws FileNotFoundException {
             window = new Stage();
-            window.initModality(Modality.APPLICATION_MODAL);
-            window.setTitle("It works");
+           window.initModality(Modality.APPLICATION_MODAL);
+            window.setTitle("PONG");
+            //a new canvas for drawing
+            Canvas canvas = new Canvas(width, height);
+            GraphicsContext graphics = canvas.getGraphicsContext2D();
+            //timeline for animations
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> run(graphics)));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+
+            //The mouse controls
+            canvas.setOnMouseMoved(e -> posYPlayer1 = e.getY());
+            canvas.setOnMouseClicked(e ->  gameStarted = true);
+
 
             //exit button
             FileInputStream inputBack = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/arrow.png");
@@ -64,16 +110,87 @@ public class GameBoard {
             layout.getChildren().add(exit);
             layout.setAlignment (Pos.TOP_LEFT);
 
-            //PONG Game
 
 
+            //Scene scene = new Scene(layout, 700, 600);
+//            exportScene = scene;
+//            scene.setFill(Color.RED);
+//            window.setScene(scene);
 
-            Scene scene = new Scene(layout, 700, 600);
-            exportScene = scene;
-            scene.setFill(Color.RED);
-            window.setScene(scene);
-            window.showAndWait();
+            window.setScene(new Scene(new StackPane(canvas, layout)));
+            window.show();
+            timeline.play();
         }
 
+    private static void run(GraphicsContext gc) {
+
+        //setting the background
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 28, width, height-20);
+
+        //setting the text color
+        gc.setFill(Color.WHITE);
+        gc.setFont(Font.font(25));
+
+        if(gameStarted) {
+            //setting the ball movement
+            ballPosX = ballPosX + ballSpeedX;
+            ballPosY = ballPosY + ballSpeedY;
+
+            //creating the opponent
+            if(ballPosX < width - width/4){
+                posYPlayer2 = ballPosY - palletHeight/2;
+            }else{
+                if(ballPosY > posYPlayer2 + palletHeight/2 )
+                {
+                    posYPlayer2 += 1;
+                }else {
+                    posYPlayer2 -= 1 ;
+                }
+            }
+
+            //drawing the ball
+            gc. fillOval(ballPosX, ballPosY, ballR, ballR );
+        }else {
+            //start text
+            gc.setStroke(Color.WHITE);
+            gc.setTextAlign(TextAlignment.CENTER);
+            gc.strokeText("Click to Start", width / 2, height / 2);
+
+            //reset the starting point of the ball
+            ballPosX = width / 2;
+            ballPosY = height / 2;
+
+            //reset the speed and the direction of the ball
+            if(new Random().nextInt(2) == 0)
+                ballSpeedX = 1;
+            else
+                ballSpeedX = -1;
+
+            if(new Random().nextInt(2) == 0)
+                ballSpeedY = 1;
+            else
+                ballSpeedY = -1;
+
+        }
+
+        //bounding the ball with the canvas
+        if(ballPosY > height || ballPosY < 0)
+            ballPosY = ballPosY * -1;
+
+        //point calculator
+        if(ballPosX < posXPlayer1 - palletWidth) {
+            scorePlayer2++;
+            gameStarted = false;
+        }
+
+        if(ballPosX > posXPlayer2 - palletWidth) {
+            scorePlayer1++;
+            gameStarted = false;
+        }
+
+
     }
+
+}
 

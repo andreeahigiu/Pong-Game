@@ -92,7 +92,7 @@ public class WelcomeBoard extends Application {
      //Layout1
      VBox menuLayout = new VBox(20);
      menuLayout.getChildren().addAll(greeting, login, play, gameSettings, ranking);
-     initialOptions = new Scene(menuLayout, 700, 600);
+     initialOptions = new Scene(menuLayout, 800, 600);
      menuLayout.setAlignment(Pos.CENTER);
 
 
