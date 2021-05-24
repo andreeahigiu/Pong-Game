@@ -31,10 +31,7 @@ public class WelcomeBoard extends Application {
  private static Stage window;
  Scene initialOptions, board;
  public static boolean registering;
-//
-//    public static Stage getStage() {
-//        return window;
-//    }
+
 
  public static void main (String[] args){
      launch(args);
@@ -49,8 +46,6 @@ public class WelcomeBoard extends Application {
      Font font = Font.font ("Courier New", FontWeight.BOLD, 25);
      greeting.setFont(font);
 
-//     Label options = new Label("Options:");
-//     options.setFont(new Font("Arial", 20));
 
      //login button
      FileInputStream inputLogin = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/user.png");
@@ -137,7 +132,6 @@ public class WelcomeBoard extends Application {
      });
 
 
-
      //Layout1
      VBox menuLayout = new VBox(20);
      menuLayout.getChildren().addAll(greeting, login, register, play, gameSettings, ranking);
@@ -146,7 +140,6 @@ public class WelcomeBoard extends Application {
 
 
      //First display the options
-
      window.setScene(initialOptions);
      window.setTitle("PONG");
      window.show();

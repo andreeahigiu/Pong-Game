@@ -140,6 +140,7 @@ public class RegisterBoard {
         window.show();
     }
 
+    //verifica daca numele de utilizator si parola sunt valide
     private static boolean isAllowed(String username, String password){
 
         if(username.length() >= 2 && password.length() >= 8)
@@ -148,6 +149,7 @@ public class RegisterBoard {
             return false;
     }
 
+    //verifica existenta userului in bd
     private static boolean checkExistance(String username){
         try{
             UsersRepository.findUserByName(username);
@@ -157,6 +159,7 @@ public class RegisterBoard {
         return true;
     }
 
+    //adauga noul utilizator in baza de date
     private static void createUser(String username, String password){
 
         EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
@@ -174,7 +177,7 @@ public class RegisterBoard {
 
         }
 
-
+        //logheaza utilizatorul
     private static void loginUser(String username, String password){
         Users user = UsersRepository.findUserByName(username);
         System.out.println("check pass" + user.getPassword());

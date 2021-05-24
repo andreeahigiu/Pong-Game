@@ -115,6 +115,8 @@ public class GameBoard {
                 timeline.stop();
                 setScore();
                 gameStarted = false;
+                scorePlayer2 = 0;
+                scorePlayer1 = 0;
                 window.close();
             });
 
