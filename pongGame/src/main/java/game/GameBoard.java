@@ -53,6 +53,9 @@ public class GameBoard {
     private static int scorePlayer1 = 0;
     private static int scorePlayer2 = 0;
     private static boolean gameStarted;
+    private static String colorScheme;
+    private static Color background;
+    private static Color gamePieces;
 
 
 
@@ -64,10 +67,6 @@ public class GameBoard {
         GameBoard.exportScene = exportScene;
     }
 
-//    public static void main(String[] args) {
-//            launch(args);
-//        }
-
     public static Stage getWindow() {
         return window;
     }
@@ -76,16 +75,15 @@ public class GameBoard {
         GameBoard.window = window;
     }
 
-//    public static void playGame() throws FileNotFoundException {
-//        display();
-//    }
         public static void display() throws FileNotFoundException {
             window = new Stage();
            window.initModality(Modality.APPLICATION_MODAL);
             window.setTitle("PONG");
+
             //a new canvas for drawing
             Canvas canvas = new Canvas(width, height);
             GraphicsContext graphics = canvas.getGraphicsContext2D();
+
             //timeline for animations
             Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10), e -> run(graphics)));
             timeline.setCycleCount(Timeline.INDEFINITE);
@@ -107,6 +105,7 @@ public class GameBoard {
             exit.setOnAction(e -> {
                 timeline.stop();
                 setScore();
+                gameStarted = false;
                 window.close();
             });
 
@@ -125,12 +124,28 @@ public class GameBoard {
 
     private static void run(GraphicsContext gc) {
 
+        colorScheme = SettingsBoard.getColorScheme();
+        background = Color.BLACK;
+        gamePieces = Color.WHITE;
+        if(colorScheme == null)
+        {
+            background = Color.BLACK;
+            gamePieces = Color.WHITE;
+        }else
+            if(colorScheme.equals("pink")){
+                background = Color.rgb(204, 0 ,129);
+                gamePieces = Color.rgb(255, 198, 234);
+            }else
+            if(colorScheme.equals("orange")) {
+                background = Color.rgb(255, 141, 29);
+                gamePieces = Color.WHITE;
+            }
         //setting the background
-        gc.setFill(Color.BLACK);
+        gc.setFill(background);
         gc.fillRect(0, 0, width, height);
 
         //setting the text color
-        gc.setFill(Color.WHITE);
+        gc.setFill(gamePieces);
         gc.setFont(Font.font(25));
 
         if(gameStarted) {
@@ -206,6 +221,7 @@ public class GameBoard {
         gc.fillRect(posXPlayer2, posYPlayer2, palletWidth, palletHeight);
         gc.fillRect(posXPlayer1, posYPlayer1, palletWidth, palletHeight);
 
+        System.out.println("still in");
     }
 
     public static void setScore(){

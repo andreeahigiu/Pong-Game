@@ -1,4 +1,4 @@
-game\InitialOptions.class
+game\SettingsBoard.class
 game\GameBoard.class
 game\WelcomeBoard.class
 game\RegisterBoard.class

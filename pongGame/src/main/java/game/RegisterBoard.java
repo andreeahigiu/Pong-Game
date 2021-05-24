@@ -48,6 +48,7 @@ public class RegisterBoard {
     public static void displayRegister() throws FileNotFoundException {
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Register");
 
         //exit button
         FileInputStream inputBack = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/arrow.png");

@@ -106,6 +106,13 @@ public class WelcomeBoard extends Application {
      imageView3.setFitWidth(28);
      Button gameSettings = new Button("Settings", imageView3);
      gameSettings.setMaxSize(100, 150);
+     gameSettings.setOnAction(e -> {
+         try {
+             SettingsBoard.displaySettings();
+         } catch (FileNotFoundException fileNotFoundException) {
+             fileNotFoundException.printStackTrace();
+         }
+     });
 
      //ranking button
      FileInputStream inputRank = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/ranking.png");
@@ -115,6 +122,9 @@ public class WelcomeBoard extends Application {
      imageView4.setFitWidth(25);
      Button ranking = new Button ("Ranking", imageView4);
      ranking.setMaxSize(100, 150);
+     ranking.setOnAction(e -> {
+         RankingBoard.displayRanking();
+     });
 
 
 
