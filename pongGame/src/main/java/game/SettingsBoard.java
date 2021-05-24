@@ -20,6 +20,15 @@ import java.awt.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Class SettingsBoard:
+ * Contine fereastra cu optiunile jocului si anume selectarea culorilor.
+ *
+ * @author Andreea Higiu
+ * @version 1.0
+ */
+
+
 public class SettingsBoard {
     private static Stage window;
     private static Scene settingsScene;

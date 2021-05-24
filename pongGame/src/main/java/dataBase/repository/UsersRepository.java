@@ -6,6 +6,15 @@ import dataBase.entityManager.EntityManagement;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+/**
+ * Class UsersRepository:
+ *  contine metodele pentru crearea unei noi linii in tabela User, pentru identificarea unui utilizator in functie de nume,
+ *  pentru updatarea scorului unui jucator din bd si pentru obtinerea tuturor jucatorilor din baza de date si sortarea acestora in functie de scor.
+ *
+ * @author Andreea Higiu
+ * @version 1.0
+ */
+
 public class UsersRepository {
     public static Users create(Users user){
         EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();

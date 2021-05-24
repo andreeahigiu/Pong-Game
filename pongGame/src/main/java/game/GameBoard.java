@@ -27,6 +27,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
 
+/**
+ * Class GameBoard:
+ * Contine metode pentru desfasurarea jocului pong
+ *
+ *
+ * @author Andreea Higiu
+ * @version 1.0
+ */
+
 public class GameBoard {
 
     //variables
@@ -150,8 +159,8 @@ public class GameBoard {
 
         if(gameStarted) {
             //setting the ball movement
-            ballPosX = ballPosX + ballSpeedX;
-            ballPosY = ballPosY + ballSpeedY;
+            ballPosX = ballPosX  +ballSpeedX ;
+            ballPosY = ballPosY  +ballSpeedY ;
 
             //creating the opponent
             if(ballPosX < width - width/4){
@@ -161,7 +170,7 @@ public class GameBoard {
                 {
                     posYPlayer2 += 1;
                 }else {
-                    posYPlayer2 -= 1 ;
+                    posYPlayer2 -= 1;
                 }
             }
 
@@ -192,7 +201,7 @@ public class GameBoard {
 
         //bounding the ball with the canvas
         if(ballPosY > height || ballPosY < 0)
-            ballSpeedY = ballSpeedY * -1;
+            ballSpeedY = ballSpeedY * -1 ;
 
         //point calculator
         if(ballPosX < posXPlayer1 - palletWidth) {
@@ -205,7 +214,7 @@ public class GameBoard {
             gameStarted = false;
         }
 
-        //increasing the speed of the ball
+        //increasing the speed of the ball after it hits a wall or the pallets
         if( ((ballPosX + ballR > posXPlayer2) && ballPosY >= posYPlayer2 && ballPosY <= posYPlayer2 + palletHeight) ||
                 ((ballPosX < posXPlayer1 + palletWidth) && ballPosY >= posYPlayer1 && ballPosY <= posYPlayer1 + palletHeight)) {
             ballSpeedY += 1 * Math.signum(ballSpeedY);
@@ -218,10 +227,9 @@ public class GameBoard {
         gc.fillText(scorePlayer1 + "\t\t\t\t\t\t\t" + scorePlayer2, width / 2, 100);
 
         //drawing the pallets of the players
-        gc.fillRect(posXPlayer2, posYPlayer2, palletWidth, palletHeight);
         gc.fillRect(posXPlayer1, posYPlayer1, palletWidth, palletHeight);
+        gc.fillRect(posXPlayer2, posYPlayer2, palletWidth, palletHeight);
 
-        System.out.println("still in");
     }
 
     public static void setScore(){
@@ -230,7 +238,7 @@ public class GameBoard {
             String username = RegisterBoard.getUsername();
             UsersRepository.updateUserScore(username, scorePlayer1);
 
-            System.out.println("scorul: " + scorePlayer1);
+            System.out.println("scorul- Player1: " + scorePlayer1 + " Player2: " + scorePlayer2);
 
         }
     }

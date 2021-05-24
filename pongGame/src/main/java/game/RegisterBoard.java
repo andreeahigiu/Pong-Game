@@ -24,6 +24,15 @@ import javax.persistence.NoResultException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Class RegisterBoard:
+ * Contine metodele pentru inregistrarea si logarea userilor. Comunica cu baza de date, adauga useri noi sau
+ * verifica existenta acestora si seteaza statusul utilizatorilor logat/nelogat
+ *
+ * @author Andreea Higiu
+ * @version 1.0
+ */
+
 public class RegisterBoard {
 
     private static Stage window;

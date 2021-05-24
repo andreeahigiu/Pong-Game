@@ -20,6 +20,15 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class RankingBoard:
+ * Contine metodele pentru extragerea utilizatorilor din bd si afisarea acestora intr-un tabel
+ *
+ * @author Andreea Higiu
+ * @version 1.0
+ */
+
+
 public class RankingBoard {
 
     private static Stage window;

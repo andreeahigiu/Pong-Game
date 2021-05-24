@@ -5,6 +5,15 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * Class Users:
+ * Contine detaliile unui utilizator: id, username, password si scor
+ *
+ * @author Andreea Higiu
+ * @version 1.0
+ */
+
+
 @Entity
 @Table(name = "USERS")
 @NamedQueries({

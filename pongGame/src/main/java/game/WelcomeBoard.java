@@ -16,6 +16,16 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Class WelcomeBoard:
+ * Contine butoanele meniului principal si redirectionarea catre ecranele aferente, odata cu apasarea acestora
+ *
+ *
+ * @author Andreea Higiu
+ * @version 1.0
+ */
+
+
 public class WelcomeBoard extends Application {
 
  private static Stage window;
