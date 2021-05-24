@@ -100,13 +100,16 @@ public class RegisterBoard {
                 }
             }else{
                 //login
-                if(checkExistance(username))
+                if(checkExistance(username)){
                     loginUser(username, password);
-                System.out.println("loggedIn: "+ loggedIn);
-                if(loggedIn)
-                    confirmation.setText("Welcome, " + username);
-                else
-                    confirmation.setText("User does not exist!");
+                    System.out.println("loggedIn: "+ loggedIn);
+                    if(loggedIn)
+                        confirmation.setText("Welcome, " + username);
+                    else
+                        confirmation.setText("Incorrect password, try again");
+                }else
+                    confirmation.setText("User doesn't exist, please register.");
+
 
             }
 
@@ -168,8 +171,6 @@ public class RegisterBoard {
         System.out.println("check pass" + user.getPassword());
         if(user.getPassword().equals(password)){
             loggedIn = true;
-        }else{
-            loggedIn = false;
         }
     }
 }
