@@ -1,5 +1,7 @@
 package game;
 
+import dataBase.entityClasses.Users;
+import dataBase.repository.UsersRepository;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -8,6 +10,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -91,6 +94,7 @@ public class GameBoard {
             canvas.setOnMouseMoved(e -> posYPlayer1 = e.getY());
             canvas.setOnMouseClicked(e ->  gameStarted = true);
 
+            BorderPane border = new BorderPane();
 
             //exit button
             FileInputStream inputBack = new FileInputStream("D:/CursuriFacultateAn2Sem2/PA/finalProjectPA/assets/arrow.png");
@@ -101,16 +105,20 @@ public class GameBoard {
 
             Button exit = new Button(null, imageView);
             exit.setOnAction(e -> {
+                timeline.stop();
+                setScore();
                 window.close();
             });
 
             StackPane layout = new StackPane();
             layout.getChildren().add(exit);
             layout.setAlignment (Pos.TOP_LEFT);
+            border.setTop(layout);
+            border.setCenter(new StackPane(canvas));
 
 
-
-            window.setScene(new Scene(new StackPane(canvas)));
+           // window.setScene(new Scene(new StackPane(canvas)));
+            window.setScene(new Scene(border));
             window.show();
             timeline.play();
         }
@@ -192,13 +200,23 @@ public class GameBoard {
         }
 
         //drawing the score
-        gc.fillText(scorePlayer1 + "\t\t\t\t\t\t\t\t" + scorePlayer2, width / 2, 100);
+        gc.fillText(scorePlayer1 + "\t\t\t\t\t\t\t" + scorePlayer2, width / 2, 100);
 
         //drawing the pallets of the players
         gc.fillRect(posXPlayer2, posYPlayer2, palletWidth, palletHeight);
         gc.fillRect(posXPlayer1, posYPlayer1, palletWidth, palletHeight);
 
+    }
 
+    public static void setScore(){
+        if(RegisterBoard.getLoggedIn() == true)
+        {
+            String username = RegisterBoard.getUsername();
+            UsersRepository.updateUserScore(username, scorePlayer1);
+
+            System.out.println("scorul: " + scorePlayer1);
+
+        }
     }
 
 }

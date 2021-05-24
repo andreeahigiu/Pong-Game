@@ -12,9 +12,12 @@ public class Application {
     public static void main(String[] args) {
 
         EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
+//
+//        Users user = new Users("Ionela", "12345");
+//        UsersRepository.create(user);
 
-        Users user = new Users("Ioana", "1234i");
-        UsersRepository.create(user);
+        //UsersRepository.updateUserScore("Ioana", 9);
+        UsersRepository.updateUserScore("Ionela", 9);
 
     }
 

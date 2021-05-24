@@ -90,6 +90,7 @@ public class WelcomeBoard extends Application {
      {
       try {
        GameBoard.display();
+
       } catch (FileNotFoundException fileNotFoundException) {
        fileNotFoundException.printStackTrace();
       }
@@ -125,6 +126,7 @@ public class WelcomeBoard extends Application {
 
 
      //First display the options
+
      window.setScene(initialOptions);
      window.setTitle("PONG");
      window.show();

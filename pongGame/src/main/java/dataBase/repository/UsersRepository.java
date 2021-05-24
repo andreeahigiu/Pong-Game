@@ -33,14 +33,29 @@ public class UsersRepository {
     public static Users findUserByName(String username){
         EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
         em.getTransaction().begin();
-        Users actor = (Users) em.createNamedQuery("User.findByName")
+        Users user = (Users) em.createNamedQuery("User.findByName")
                 .setParameter("username", username)
                 .getSingleResult();
 
         em.getTransaction().commit();
         em.close();
 
-        return actor;
+        return user;
+    }
+
+    public static void updateUserScore(String username, int score){
+
+        EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
+        em.getTransaction().begin();
+
+        Users user = UsersRepository.findUserByName(username);
+        user.setScore(score);
+        em.merge(user);
+
+        em.getTransaction().commit();
+        em.close();
+
+
     }
     
 }

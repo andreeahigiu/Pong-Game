@@ -33,6 +33,18 @@ public class RegisterBoard {
     private static boolean loggedIn = false;
     private static boolean userExists;
 
+    public static String getUsername() {
+        return username;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static boolean getLoggedIn() {
+        return loggedIn;
+    }
+
     public static void displayRegister() throws FileNotFoundException {
         window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
