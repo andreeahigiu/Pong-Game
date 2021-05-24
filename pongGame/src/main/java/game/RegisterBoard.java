@@ -109,11 +109,6 @@ public class RegisterBoard {
 
             }
 
-
-//            createUser(username, password);
-//            if(userExists == false)
-//                confirmation.setText("user doesnt exist");
-
         });
 
         ColumnConstraints column1 = new ColumnConstraints();column1.setPercentWidth(35);
@@ -158,21 +153,12 @@ public class RegisterBoard {
     }
 
     private static void addUser(String username, String password){
-//        EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
-//        Users newUser = new Users(username, password);
-//        newUser.setScore(0);
-//        UsersRepository.create(newUser);
         try{
             UsersRepository.findUserByName(username);
         }catch(NoResultException e){
             userExists=false;
         }
-//        if(UsersRepository.findUserByName(username) != null && UsersRepository.findUserByName(username).getPassword() == password){
-//                System.out.println("e deja");
-//            }
-//            else{
-//                System.out.println("nu e");
-//            }
+
         }
 
 

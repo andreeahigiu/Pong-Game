@@ -2,6 +2,8 @@ package dataBase.entityClasses;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "USERS")
@@ -9,7 +11,7 @@ import java.io.Serializable;
         @NamedQuery(name = "User.findByName",
                 query = "SELECT u FROM Users u WHERE u.username LIKE:username")})
 
-public class Users {
+public class Users implements Comparable<Users> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Id
     @Column(name = "ID", nullable = false, length = 6)
@@ -19,11 +21,11 @@ public class Users {
     private String password;
     private int score;
 
-    public Users(){
+    public Users() {
 
     }
 
-    public Users(String username, String password){
+    public Users(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -59,4 +61,27 @@ public class Users {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", score=" + score +
+                '}';
+    }
+
+
+    @Override
+    public int compareTo(Users o) {
+        Integer score2 = o.getScore();
+        Integer score1 = this.score;
+
+        return score2.compareTo(score1);
+    }
+
+
+
+
 }

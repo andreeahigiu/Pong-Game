@@ -4,6 +4,7 @@ import dataBase.entityClasses.Users;
 import dataBase.entityManager.EntityManagement;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 public class UsersRepository {
     public static Users create(Users user){
@@ -57,5 +58,17 @@ public class UsersRepository {
 
 
     }
-    
+
+    public static List<Users> findTopUsers() {
+//        return session.createQuery("SELECT a FROM Student a", Users.class).getResultList();
+        EntityManager em = EntityManagement.getInstance().getEntityManagerFactory().createEntityManager();
+        em.getTransaction().begin();
+
+        List<Users> result = em.createQuery("SELECT u FROM Users u", Users.class).getResultList();
+        result.sort(Users::compareTo);
+
+        em.getTransaction().commit();
+        em.close();
+        return result;
+    }
 }
